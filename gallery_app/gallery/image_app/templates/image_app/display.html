@@ -1,0 +1,107 @@
+{% extends 'image_app/main.html' %} {%block content %} {% load images_extras %}
+
+<!-- <nav class="navbar navbar-light bg-light">
+  <div class="container-fluid d-flex flex-row-reverse align-items-center">
+    <form class="">
+      {{myFilter.form.description}}
+      <div class="empty_space"></div>
+      {{myFilter.form.categories}}
+      <button class="btn btn-outline-success" style="margin-left: 7px;" type="submit">Search</button>
+    </form>
+    <div class="d-flex">
+      <a class="btn btn-secondary mb-4 px-4" href="{% url 'add' %}"
+        >Add Image</a
+      >
+    </div>
+  </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light backgr-nav">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"> Gallery App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active " href="{% url 'add' %}">Add Image</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        {{myFilter.form.description}}
+      <div class="empty_space"></div>
+        {{myFilter.form.categories}}
+        <button class="btn btn-outline-success btn-srch" style="margin-left: 7px;" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container ">
+  <div class="row my-5">
+    <!-- cards -->
+    <div class="col-md-12">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+        {% for picture in page_obj %}
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img class="picture" src="{{ picture.picture.url }}" alt="" />
+            <div class="card-body">
+              <p class="card-text">{{ picture.categories.category }}</p>
+              <p>{{picture.description}}</p>
+              <div class="d-grid gap-2">
+                <a
+                  href="{% url 'detail' picture.id %}"
+                  class="btn btn-outline-secondary btn-cust"
+                  >View</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination mb-4">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+      <a href="{% my_url 1 'page' request.GET.urlencode %}">&laquo; first</a>
+      <a
+        href="{% my_url page_obj.previous_page_number 'page' request.GET.urlencode %}"
+        >previous</a
+      >
+      {% endif %}
+
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+      <a
+        href="{% my_url page_obj.next_page_number 'page' request.GET.urlencode %}"
+        >next</a
+      >
+      <a
+        href="{% my_url page_obj.paginator.num_pages  'page' request.GET.urlencode %}"
+        >last &raquo;</a
+      >
+      {% endif %}
+    </span>
+  </div>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
+
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'image_app/main.html' %} {% block content %}
+
+<div class="container">
+  <div class="row my-5 justify-content-center">
+    <!-- cards -->
+    <div class="col-md-6">
+      <a
+        class="btn btn-secondary mb-5 px-4"
+        href="{% url 'home' %}?category=all"
+        >Back</a
+      >
+      <div class="card shadow-sm">
+        <img src="{{ picture.picture.url }}" alt="" />
+        <div class="card-body">
+          <p class="card-text">{{ picture.categories }}</p>
+          <p>{{picture.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
